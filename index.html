@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Folleto Animado</title>
 
 <style>
@@ -11,22 +12,41 @@ body {
   background: black;
 }
 
+/* Slides */
 .slide {
   position: absolute;
+  width: 100vw;
+  height: 100vh;
+  transition: left 1s ease;
+}
+
+/* Imágenes */
+.slide img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  transition: 1s;
+  object-fit: contain; /* 🔥 no recorta */
+  background: black;
 }
 </style>
 </head>
 
 <body>
 
-<img src="portada.jpg" class="slide" id="s1" style="left:0%">
-<img src="contenido.jpg" class="slide" id="s2" style="left:100%">
-<img src="r3.jpg" class="slide" id="s3" style="left:100%">
-<img src="r4.jpg" class="slide" id="s4" style="left:100%">
+<div class="slide" id="s1" style="left:0%">
+  <img src="portada.jpg">
+</div>
+
+<div class="slide" id="s2" style="left:100%">
+  <img src="contenido.jpg">
+</div>
+
+<div class="slide" id="s3" style="left:100%">
+  <img src="r3.jpg">
+</div>
+
+<div class="slide" id="s4" style="left:100%">
+  <img src="r4.jpg">
+</div>
 
 <script>
 let slides = [
@@ -39,24 +59,25 @@ let slides = [
 let index = 0;
 
 setInterval(() => {
-  // ocultar actual
+
+  // mover actual a la izquierda
   slides[index].style.left = "-100%";
 
-  // siguiente
+  // siguiente índice
   index = (index + 1) % slides.length;
 
-  // mostrar siguiente
+  // traer siguiente al centro
   slides[index].style.left = "0%";
 
-  // preparar las demás
-  for (let i = 0; i < slides.length; i++) {
-    if (i !== index && slides[i].style.left !== "-100%") {
-      slides[i].style.left = "100%";
+  // preparar los demás a la derecha
+  slides.forEach((slide, i) => {
+    if (i !== index && slide.style.left !== "-100%") {
+      slide.style.left = "100%";
     }
-  }
+  });
 
-}, 3000); // cambia cada 3 segundos
+}, 5000); // 🔥 5 segundos
 </script>
 
 </body>
-</html>
+  </html>
